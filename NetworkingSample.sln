@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkingSampleSingleServe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkingSampleSingleClient", "NetworkingSampleSingleClient\NetworkingSampleSingleClient.csproj", "{A335BDA1-D0E0-4952-AB7C-2EEF8DED2BE7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetworkingSampleThreadServer", "NetworkingSampleThreadServer\NetworkingSampleThreadServer.csproj", "{45381286-389D-44A2-9A4B-A01B16532E70}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{A335BDA1-D0E0-4952-AB7C-2EEF8DED2BE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A335BDA1-D0E0-4952-AB7C-2EEF8DED2BE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A335BDA1-D0E0-4952-AB7C-2EEF8DED2BE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45381286-389D-44A2-9A4B-A01B16532E70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45381286-389D-44A2-9A4B-A01B16532E70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45381286-389D-44A2-9A4B-A01B16532E70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45381286-389D-44A2-9A4B-A01B16532E70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
