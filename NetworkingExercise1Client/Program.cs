@@ -26,7 +26,7 @@ namespace NetworkingExercise1Client
             }
 
             var ieServer = (IPEndPoint)server.RemoteEndPoint!;
-            Console.WriteLine("Server on IP:{0} at port {1}", ieServer.Address, ieServer.Port);
+            Console.WriteLine("Server on IP: {0} at port {1}", ieServer.Address, ieServer.Port);
 
             using (var networkStream = new NetworkStream(server))
             using (var streamReader = new StreamReader(networkStream))
@@ -34,15 +34,13 @@ namespace NetworkingExercise1Client
             {
                 var message = streamReader.ReadLine();
                 Console.WriteLine(message);
-                while (true)
-                {
-                    var userMessage = Console.ReadLine();
-                    
-                    streamWriter.WriteLine(userMessage);
-                    streamWriter.Flush();
-                    
-                    Console.WriteLine(message);
-                }
+                
+                var userMessage = Console.ReadLine();
+                streamWriter.WriteLine(userMessage);
+                streamWriter.Flush();
+                
+                message = streamReader.ReadLine();
+                Console.WriteLine(message);
             }
         }
     }
