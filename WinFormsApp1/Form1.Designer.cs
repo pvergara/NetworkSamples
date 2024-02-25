@@ -128,14 +128,7 @@ partial class Form1
 
     #endregion
 
-    private Button time_Button;
-    private Button date_Button;
-    private Button all_Button;
-    private Button close_Button;
-    private TextBox password_TextBox;
-    private Label passwordCheck_Label;
     private ColorDialog colorDialog1;
-    private Button configuration_Button;
     private Button TimeButton;
     private Button DateButton;
     private Button AllButton;
