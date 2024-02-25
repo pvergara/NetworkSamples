@@ -39,7 +39,7 @@ namespace NetworkingExercise1Client
                 streamWriter.WriteLine(userMessage);
                 streamWriter.Flush();
                 
-                message = streamReader.ReadLine();
+                message = streamReader.ReadToEnd();
                 Console.WriteLine(message);
             }
         }
