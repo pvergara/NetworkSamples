@@ -68,7 +68,7 @@ namespace NetworkingExercise3ChatServer
                 }
 
                 SendMessageToAnotherUsers($@"Has been disconnected", socketClient);
-
+                DeleteClientEndPointToAllCollections(socketClient);
                 Console.WriteLine("Client disconnected.");
                 Console.WriteLine("Connection closed");
             }
@@ -76,19 +76,40 @@ namespace NetworkingExercise3ChatServer
             socketClient.Close();
         }
 
-        private static void SendMessageToAnotherUsers(string message, Socket key)
+        private static void DeleteClientEndPointToAllCollections(Socket socketClient)
         {
             lock (LockObject)
             {
-                var anotherStreamWriterNotOfMe = StreamWriterBySocket.Where(pair => pair.Key != key).ToList();
-                var username = UserBySocket.GetValueOrDefault(key)!;
-                var address = ((IPEndPoint)key.RemoteEndPoint!).Address.ToString();
-                var port = ((IPEndPoint)key.RemoteEndPoint).Port.ToString();
-                foreach (var pair in anotherStreamWriterNotOfMe)
+                Program.StreamWriterBySocket.Remove(socketClient);
+                Program.UserBySocket.Remove(socketClient);
+            }
+        }
+
+        private static void SendMessageToAnotherUsers(string message, Socket key)
+        {
+            var anotherStreamWriterNotOfMe = new Dictionary<Socket, StreamWriter>();
+            var username = "";
+
+            lock (LockObject)
+            {
+                foreach (var pair in Program.StreamWriterBySocket)
                 {
-                    pair.Value.WriteLine($@"{username}.{address}:{port}: {@message}");
-                    pair.Value.Flush();
+                    if (pair.Key != key)
+                    {
+                        anotherStreamWriterNotOfMe.Add(pair.Key, pair.Value);
+                    }
                 }
+
+                // var anotherStreamWriterNotOfMe = StreamWriterBySocket.Where(pair => pair.Key != key).ToList();
+                username = UserBySocket.GetValueOrDefault(key)!;
+            }
+
+            var address = ((IPEndPoint)key.RemoteEndPoint!).Address.ToString();
+            var port = ((IPEndPoint)key.RemoteEndPoint).Port.ToString();
+            foreach (var pair in anotherStreamWriterNotOfMe)
+            {
+                pair.Value.WriteLine($@"{username}.{address}:{port}: {@message}");
+                pair.Value.Flush();
             }
         }
 
@@ -115,12 +136,14 @@ namespace NetworkingExercise3ChatServer
 
         private static void SendMessageToMe(string message, Socket socketClient)
         {
+            StreamWriter? streamWriter;
             lock (LockObject)
             {
-                var streamWriter = Program.StreamWriterBySocket.GetValueOrDefault(socketClient);
-                streamWriter?.WriteLine(message);
-                streamWriter?.Flush();
+                streamWriter = Program.StreamWriterBySocket.GetValueOrDefault(socketClient);
             }
+
+            streamWriter?.WriteLine(message);
+            streamWriter?.Flush();
         }
 
         private static void AddUserToCollections(Socket socketClient, string? username)
