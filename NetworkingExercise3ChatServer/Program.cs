@@ -35,8 +35,8 @@ namespace NetworkingExercise3ChatServer
                 socketClientRemoteEndPoint.Port);
 
             var networkStream = new NetworkStream(socketClient);
-            AddClientEndPointToCollections(socketClient,networkStream);
-            using (var streamReader = new StreamReader(networkStream,Encoding.UTF8))
+            AddClientEndPointToCollections(socketClient, networkStream);
+            using (var streamReader = new StreamReader(networkStream, Encoding.UTF8))
             {
                 const string welcome = "Welcome to chat server. Please provide username.";
                 SendMessageToMe(welcome, socketClient);
@@ -45,9 +45,7 @@ namespace NetworkingExercise3ChatServer
                 var username = streamReader.ReadLine();
                 AddUserToCollections(socketClient, username);
 
-                SendMessageToAnotherUsers(
-                    $@"{username}@{socketClientRemoteEndPoint.Address}:{socketClientRemoteEndPoint.Port} has been connected",
-                    socketClient);
+                SendMessageToAnotherUsers($@" Has been connected", socketClient);
 
                 while (message != "#exit")
                 {
@@ -69,9 +67,7 @@ namespace NetworkingExercise3ChatServer
                     }
                 }
 
-                SendMessageToAnotherUsers(
-                    $@"{username}@{socketClientRemoteEndPoint.Address}:{socketClientRemoteEndPoint.Port} has been disconnected",
-                    socketClient);
+                SendMessageToAnotherUsers($@"Has been disconnected", socketClient);
 
                 Console.WriteLine("Client disconnected.");
                 Console.WriteLine("Connection closed");
@@ -90,13 +86,12 @@ namespace NetworkingExercise3ChatServer
                 var port = ((IPEndPoint)key.RemoteEndPoint).Port.ToString();
                 foreach (var pair in anotherStreamWriterNotOfMe)
                 {
-                    pair.Value.WriteLine( $@"{username}.{address}:{port}: {@message}");
+                    pair.Value.WriteLine($@"{username}.{address}:{port}: {@message}");
                     pair.Value.Flush();
                 }
             }
         }
 
-        
 
         private static void SendListOfUsersToMe(Socket socketClient)
         {
@@ -141,7 +136,7 @@ namespace NetworkingExercise3ChatServer
         {
             lock (LockObject)
             {
-                var streamWriter = new StreamWriter(networkStream,Encoding.UTF8);
+                var streamWriter = new StreamWriter(networkStream, Encoding.UTF8);
                 Program.StreamWriterBySocket.Add(socketClient, streamWriter);
             }
         }
